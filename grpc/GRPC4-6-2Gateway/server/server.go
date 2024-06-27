@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
+	v1 "gateway/Gateway/common/gateway/v1"
 	"google.golang.org/grpc"
-	"hello"
 	"log"
 	"net/http"
 	"runtime"
@@ -15,11 +15,10 @@ func main() {
 	defer cancel()
 
 	mux := runtime.NewServeMux()
+	server := grpc.NewServer()
+	srv := v1.UnimplementedRestServiceServer{}
+	err := v1.RegisterRestServiceServer()
 
-	err := hello.RegisterRestServiceHandlerFromEndpoint(
-		ctx, mux, "localhost:5000",
-		[]grpc.DialOption{grpc.WithInsecure()},
-	)
 	if err != nil {
 		log.Fatal(err)
 	}
