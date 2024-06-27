@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package watch;
+
+import "google/protobuf/empty.proto";
+
+option go_package="../Watchrpc/common/proto/v1";
+
+service Watch{
+  rpc NewKVStoreService(google.protobuf.Empty) returns(NewKVStoreResponse){};
+  rpc Get(GetRequest) returns (GetResponse){};
+  rpc Set(SetRequest) returns (SetResponse){};
+  rpc Watch(WatchRequest) returns (WatchResponse){};
+  //rpc TestWatch(WatchRequest) returns(google.protobuf.Empty){}
+}
+
+
+
+//Protocol Buffers 本身不支持函数或方法作为字段类型。如果你需要存储函数或方法，
+// 通常会存储它们的参数和返回值，而不是函数本身
+message KVStoreService{
+  map<string,string> m =1 ;
+  map<string,Filter> filter = 2;
+
+  message Filter{
+    string key = 1;
+  }
+}
+
+message NewKVStoreRequest {
+  string key = 1;
+  string value = 2;
+}
+
+message NewKVStoreResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetRequest{
+  string key = 1 ;
+  string value = 2;
+}
+message GetResponse{
+  bool success = 1;
+  string message = 2;
+}
+message SetRequest{
+  string key = 1 ;
+  string value = 2;
+}
+message SetResponse{
+  bool success = 1;
+  string message = 2;
+}
+
+message WatchRequest{
+  int32 timeoutSecond = 1;
+  string keyChanged = 2;
+}
+message WatchResponse{
+  bool success = 1;
+  string message = 2;
+}

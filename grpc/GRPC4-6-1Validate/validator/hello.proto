@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package main;
+
+import "google/protobuf/descriptor.proto";
+import "validate.proto";
+
+option go_package="./common/validate/v1;validate";
+
+
+message Message {
+  string important_string = 1 [
+    (validate.rules).string = {
+    pattern:   "[\u4e00-\u9fa5]",
+        max_bytes: 30,
+    }];
+  int32 age = 2 [
+    (validate.rules).int32 = {gt: 0, lt: 100}
+  ];
+}

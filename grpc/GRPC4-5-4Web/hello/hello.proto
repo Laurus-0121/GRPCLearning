@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package hello;
+import "validate.proto";
+option go_package="./;hello";
+
+message String {
+  string value = 1;
+}
+service HelloService{
+  rpc Hello(String) returns (String);
+  rpc Channel(stream String) returns (stream String);
+}
+
+
+message Message {
+  string important_string = 1 [
+    (validate.rules).string = {in: "^[a-z]{2,5}$"}
+  ];
+  int32 age = 2 [
+    (validate.rules).int32 = {gt: 0, lt: 100}
+  ];
+}
+
