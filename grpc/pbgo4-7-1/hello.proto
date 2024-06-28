@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package hello_pb;
+import "github.com/cha2010/pbgo/pbgo.proto";
+
+//今天就写到这里了嗷
